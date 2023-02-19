@@ -1,0 +1,34 @@
+/**
+  |============================
+  | include css partials with
+  | default @import url()
+  |============================
+*/
+@import url('./reset.css');
+@import url('./components/articles.css');
+@import url('./components/burger-menu.css');
+@import url('./components/calendar.css');
+@import url('./components/categories.css');
+@import url('./components/favorites.css');
+@import url('./components/footer.css');
+@import url('./components/pagination.css');
+@import url('./components/read.css');
+@import url('./components/theme.css');
+@import url('./components/weather.css');
+@import url('./components/header.css');
+
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  color: #242424;
+  background-color: rgba(255, 255, 255, 0.87);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
