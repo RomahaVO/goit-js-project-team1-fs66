@@ -3,28 +3,31 @@ import {onSerchByCategori} from './clickByCategoriesLink'
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const buttonCategoriesRef = document.querySelector('.button-categories')
 const ulCategoriesRef = document.querySelector('.categories-list')
-const ulCategoriesOtherRef = document.querySelector('.categories-list-others')
+const ulCategoriesOtherRef = document.querySelector('.categories-list-others');
+const categorieBox = document.querySelector('.categories-menu');
+const categorieOthersBox = document.querySelector('.categories-others-menu');
+
 const categorieItem = [];
 const categorieOther = [];
 
-let counterSection = 0;
+
 searchCategories()
 onSerchByCategori()
 function onFilterCategories(arrayNews) {
   // const arrayCategories = arrayNews.map(categorie => {  })
-      if (window.matchMedia("(max-width: 768px)").matches) {
-        const arrayCategories = arrayNews.map(categorie => `<li class="categories-item"><a class="categories-link">${onFormatingString(categorie.section)}</a></li>`).join('')
+      if (window.matchMedia("(max-width: 767px)").matches) {
+        const arrayCategories = arrayNews.map(categorie => `<li class="categories-item"><a class="categories-link">${categorie.display_name}</a></li>`).join('')
 
-        onMarkupMobil(onFormatingString(arrayCategories))
+        onMarkupMobil(arrayCategories)
 
       } else if (window.matchMedia("(min-width: 768px)").matches && window.matchMedia("(max-width: 1280px)").matches) {
         const arrayCategories = arrayNews.map(
           (categorie, i) => {
             if (i < 4) {
-              categorieItem.push(`<li class="categories-item-tablet"><a class="categories-link">${onFormatingString(categorie.section)}</a></li>`) 
+              categorieItem.push(`<li class="categories-item-tablet"><a class="categories-link">${categorie.display_name}</a></li>`) 
               return categorieItem
             }else{
-              categorieOther.push(`<li class="categories-item-tablet-other"><a class="categories-link">${onFormatingString(categorie.section)}</a></li>`)
+              categorieOther.push(`<li class="categories-item-tablet-other"><a class="categories-link">${categorie.display_name}</a></li>`)
               return categorieOther
             }
           })
@@ -35,10 +38,10 @@ function onFilterCategories(arrayNews) {
         const arrayCategories = arrayNews.map(
           (categorie, i) => {
             if (i < 6) {
-              categorieItem.push(`<li class="categories-item-tablet"><a class="categories-link">${onFormatingString(categorie.section)}</a></li>`) 
+              categorieItem.push(`<li class="categories-item-tablet"><a class="categories-link">${categorie.display_name}</a></li>`) 
               return categorieItem
             }else{
-              categorieOther.push(`<li class="categories-item-tablet-other"><a class="categories-link">${onFormatingString(categorie.section)}</a></li>`)
+              categorieOther.push(`<li class="categories-item-tablet-other"><a class="categories-link">${categorie.display_name}</a></li>`)
               return categorieOther
             }
           })
@@ -68,6 +71,8 @@ function onMarkupSixCategories(item, other) {
 }
 
 function categoriesIsOpen() {
+  categorieBox.classList.toggle('js-open')
+  categorieOthersBox.classList.toggle('js-others-open')
   ulCategoriesRef.classList.toggle('is-open')
   buttonCategoriesRef.classList.toggle('is-open')
   ulCategoriesOtherRef.classList.toggle('is-open')
@@ -77,10 +82,18 @@ async function searchCategories() {
   onFilterCategories(result)
 }
 
-buttonCategoriesRef.addEventListener('click', categoriesIsOpen)
+buttonCategoriesRef.addEventListener('click', categoriesIsOpen);
 
 
-function onFormatingString(string) {
-  const formatingString = string[0].toUpperCase() + string.slice(1, string.length)
-  return formatingString;
-}
+ulCategoriesRef.addEventListener('click', ()=>{
+  ulCategoriesRef.classList.remove('is-open');
+  categorieBox.classList.remove('js-open');
+  buttonCategoriesRef.classList.remove('is-open')
+  
+});
+ulCategoriesOtherRef.addEventListener('click', ()=>{
+  ulCategoriesOtherRef.classList.remove('is-open')
+  buttonCategoriesRef.classList.remove('is-open')
+  categorieOthersBox.classList.remove('js-others-open')
+});
+

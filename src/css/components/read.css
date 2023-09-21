@@ -1,13 +1,26 @@
-.accordion {
-	display: block;
+.read-page-gallery {
+	margin-top: 60px;
+}
+
+.have-read-articles {
+	min-height: 100vh;
+	margin-bottom: 210px;
+}
+
+.accordion__border {
+	border-bottom: 1px solid #929292;
+	margin-bottom: 40px;
+}
+
+.accordion__by-date {
+	margin-bottom: 60px;
 }
 
 .accordion__title {
 	display: flex;
+
 	align-items: flex-end;
 	padding-bottom: 12px;
-	margin-top: 40px;
-	margin-bottom: 40px;
 
 	font-family: 'Poppins';
 	font-style: normal;
@@ -19,14 +32,13 @@
 	cursor: pointer;
 	outline: none;
 	transition: 0.4s;
-	color: #111321;
-	border-bottom: 1px solid #929292;
+	color: var(--main-color);
 }
 
 .accordion__arrow {
 	pointer-events: none;
 	margin-left: 8px;
-	border: solid black;
+	border: solid var(--main-color);
 	border-width: 0 2px 2px 0;
 	display: inline-block;
 	padding: 3px;
@@ -46,8 +58,11 @@
 
 .accordion__content {
 	display: none;
+	flex-wrap: wrap;
+	gap: 30px;
+	justify-content: flex-start;
 }
 
 .is-active {
-	display: block;
+	display: flex;
 }

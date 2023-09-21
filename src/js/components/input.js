@@ -1,112 +1,75 @@
-const ENDPOINT = '';
-const API_KEY = 'lN1jAQVvVGOPSqcIQoMHMLLJA9oE1Rka';
-import axios from 'axios';
+import api from '../common/API';
+import paginator from './pagination';
+import PaginationSearchHandler from './paginationSearchHandler';
+import { format, parse } from 'date-fns';
 import { onRenderOneCard } from './renderOneCard';
-class API {
-  constructor() {
-    this.name = '';
-    this.page = 1;
-  }
+import { classActiv } from './clickByCategoriesLink';
+import mobile2x from '/img/mobile@2x.png';
+import tablet2x from '/img/tablet@2x.png';
+import desktop2x from '/img/desktop@2x.png';
+import mobile from '/img/mobile.png';
+import tablet from '/img/tablet.png';
+import desktop from '/img/desktop.png';
 
-  async articleSearchByQuery() {
-    const response = await axios(
-      `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${this.name}&api-key=${API_KEY}`
-    );
-    // https://api.nytimes.com/svc/search/v2/articlesearch.json?q=ukraine&api-key=eQ8t8FWqeAGnKDTtIFrHmgZCflFrUTcV
-
-    return response.data.response.docs;
-  }
-  resetPage() {
-    this.page = 1;
-  }
-
-  incrementPage() {
-    this.page += 1;
-  }
-}
-
-const api = new API();
 
 const form = document.querySelector('form.form-search');
 const input = document.querySelector('.input-search');
 form.addEventListener('submit', onSubmit);
 const section = document.querySelector('.section__list-news');
 const articles = document.querySelector('.list-news');
-const articlesSection = document.querySelector('.section__list-news');
-console.log(articlesSection);
+const date = document.getElementById('input-picker');
+
 function onSubmit(event) {
   event.preventDefault();
-  console.log(input.value.trim());
-  api.name = input.value.trim();
-  api
-    .articleSearchByQuery()
-    .then(articles => {
-      if (articles.length === 0) {
-        return onError();
-      }
+  if (classActiv !== null) {
+    classActiv.classList.remove('categories-activ')
+  }
+  const options = {
+    api: {
+      method: api.articleSearchByQuery,
+      params: {
+        q: input.value,
+        date: dateSet(),
+      },
+      externalHandler: new PaginationSearchHandler(),
+    },
+    onPageChanged: createMarkUp,
+  };
 
-      return createMarkUp(articles);
-    })
-    .catch(error => console.error(error));
+  paginator.paginate(options);
 }
-
+function dateSet() {
+  if (localStorage.getItem('Date_current')) {
+    return new Date(localStorage.getItem('Date_current'));
+  } else {
+    return null;
+  }
+}
 function createMarkUp(articles) {
-  const markup = articles.map(
-    ({ news_desk, headline, abstract, web_url, pub_date }) => {
-      return `<li class="list-news__item">
-            <article class="item-news__article">
-                <div class="item-news__wrapper-img">
-                    <img class="item-news__img" src="#" alt="">
-                    <p class="item-news__category">${news_desk}</p>
-                    <p class="item-news__add-to-favorite">Add to favorite
-                        <svg class="item-news__icon" width="16" height="16">
-                            <use class="item-news__heart-icon" href="../img/icons_site.svg#icon-heart_wite"></use>
-                        </svg>
-                    </p>
-                </div>
-                <div class=".item-news__wrapper-text">
-                    <h2 class="item-news__title">
-                        ${headline.main}
-                    </h2>
-                    <p class="item-news__description">
-                        ${abstract}</p>
-                </div>
-                <div class="item-news__info">
-                    <span class="item-news__info-date">
-                        20/02/2021
-                    </span>
-                    <a class="item-news__info-link" href="${web_url}">Read more</a>
-                </div>
-            </article>
-        </li>`;
-    }
-  );
-
-  markup.join('');
-  return insertMarkUp(markup);
+  if (articles.length !== 0) {
+    onRenderOneCard(articles);
+  } else {
+    return onNoResults();
+  }
 }
 
-function insertMarkUp(markup) {
-  articles.innerHTML = markup;
-}
+function onNoResults() {
+  const emptyPage = `<section class="empty_main">
 
-function onError() {
-  const emptyPage = `<section class="empty">
-
-<p class="empty_title">We haven't found news 
-    <br> 
+<p class="empty_title">We haven't found news
+    <br>
     from this category</p>
 <picture>
-    <source srcset="../../img/mobile.png 1x, .../../img/mobile@2x.png 2x" type="image/png" media="(max-width: 480px)"
+    <source srcset="${mobile} 1x, ${mobile2x} 2x" type="image/png" media="(max-width: 480px)"
         alt="empty-page" />
-    <source srcset="../../img/tablet.png 1x, ../../img/tablet@2x.png 2x" type="image/png" media="(max-width:768px)"
+    <source srcset="${tablet} 1x, ${tablet2x} 2x" type="image/png" media="(max-width:768px)"
         alt="empty-page" />
-    <source srcset="../../img/desktop.png 1x, ../../img/desktop@2x.png 2x" type="image/png" media="(min-width: 1280px)"
+    <source srcset="${desktop} 1x, ${desktop2x} 2x" type="image/png" media="(min-width: 1280px)"
         alt="empty-page" />
-    <img class="empty_picture" src="../../img/mobile.png" alt="empty-page" width="248" height="198" />
+    <img class="empty_picture" src="${mobile}" alt="empty-page" width="248" height="198" />
 </picture>
 
 </section>`;
 
-  articlesSection.innerHTML = emptyPage;
+  articles.innerHTML = emptyPage;
 }

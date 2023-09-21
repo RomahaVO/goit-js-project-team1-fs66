@@ -4,6 +4,7 @@ import { onGetUserName } from "./onGetUserName";
 import { onSetCookie } from "./setCookie"
 import { onGetCookie } from "./getCookie"
 import { onDeleteCookie } from "./deleteCookie"
+import { saveLocalStorageTheme } from "../theme"
 
 // config
 Notify.init({
@@ -37,8 +38,9 @@ export const onAuthorizationUser = function(password, email){
     })
     .then((user)=> {
         onSetCookie('user', user.uid)
+        saveLocalStorageTheme()
         onAuthorizationCheck()
-     onGetUserName(user.uid)  
+     onGetUserName(user.uid)
     })
     .catch((error) => {
         const errorCode = error.code;
@@ -61,11 +63,12 @@ function onAuthorizationCheck() {
         refs.buttonLogin.classList.toggle('displayNone')
         refs.buttonLogout.classList.toggle('displayNone')
         refs.buttonLogout.addEventListener('click', onLogout)
-    } 
+    }
 }
 
 function onLogout() {
     onDeleteCookie('user');
+    saveLocalStorageTheme()
     refs.buttonRegistr.classList.toggle('displayNone')
     refs.buttonLogin.classList.toggle('displayNone')
     refs.buttonLogout.classList.toggle('displayNone')

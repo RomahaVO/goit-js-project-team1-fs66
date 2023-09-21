@@ -3,9 +3,11 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon2.svg" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NEWS WEB</title>
+  <link rel="icon" type="image/svg+xml" href="./img/favicon2.svg" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -16,27 +18,45 @@
 
 
 <body>
-  <section>
+
     <!-- Path to images as from index.html file -->
     <!-- <img src="./img/javascript.svg" alt="" /> -->
-  </section>
-
-
 
   <load="partials/header.html" />
- 
+
   <load="partials/categories.html" />
   <load="partials/articles.html" />
-
-  <load="partials/burger-menu.html" />
- 
-  <load="partials/weather.html" />
-  <load="partials/headerRead.html" />
-
   <load="partials/pagination.html" />
 
   <load="partials/footer.html" />
-
+  <div class="backdrop is-hidden" data-modal-auth>
+    <div class="modal">
+      <button class="button-exit" type="button" data-modal-close-auth>
+        <svg width="11" height="11">
+          <use href="./img/icons_site.svg#exit"></use>
+        </svg>
+      </button>
+      <h2 class="modal--head">Sign In user profile</h2>
+      <div>
+        <form action="" class="modal-form" id="form">
+          <label for="email" class="modal-form--label">Email
+            <input type="email" class="modal-form--input" id="email" name="email" required>
+            <svg width="18" height="18" class="modal-form--icon">
+              <use href="./img/icons_site.svg#mail"></use>
+            </svg>
+          </label>
+          <label for="pass" class="modal-form--label">Password
+            <input type="password" id="pass" class="modal-form--input" required>
+            <svg width="18" height="18" class="modal-form--icon">
+              <use href="./img/icons_site.svg#icon-password"></use>
+            </svg>
+          </label>
+          <button type="submit" class="modal--submit submit-auth" id="submit">Login</button>
+        </form>
+      </div>
+  
+    </div>
+  </div>
 
   <script type="module" src="/main.js"></script>
 </body>

@@ -1,6 +1,6 @@
 .section {
   margin-top: 24px;
-  padding-bottom: 100px;
+  padding-bottom: 40px;
 }
 .position-categories {
   display: flex;
@@ -31,10 +31,12 @@
   text-align: center;
   padding: 5px 37px 5px 13px;
   border-radius: 20px;
+  color: var(--theme-color);
   border: 1px solid #4b48db;
 }
 .button-categories.is-open {
   transform: rotateX(180deg);
+  top: 4px;
 }
 .categories-list.is-mobil.is-open {
   position: absolute;
@@ -42,7 +44,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  border: drop-shadow(0px 10px 60px rgba(0, 0, 0, 0.1));
   color: #4b48db;
   border-radius: 20px;
   box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1);
@@ -56,8 +57,8 @@
   background-color: transparent;
   border-color: transparent;
   position: absolute;
-  top: 5px;
-  right: 3px;
+  top: 6px;
+  right: 8px;
 }
 .categories-item {
   font-size: 12px;
@@ -68,6 +69,11 @@
   margin-bottom: 12px;
 }
 @media screen and (min-width: 768px) {
+.section {
+    margin-top: 28px;
+  padding-bottom: 48px;
+}
+
   .categories-list {
     display: flex;
     flex-direction: row;
@@ -127,7 +133,7 @@
   .categories-list-others.is-open {
     max-height: 320px;
     overflow: auto;
-    z-index: 20;
+    z-index: 200;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -139,6 +145,7 @@
     color: #4b48db;
     border-radius: 20px;
     padding: 0px 24px 8px 24px;
+    background-color: #f4f4f4;
   }
   .categories-item-tablet-other {
     font-size: 12px;
@@ -152,7 +159,7 @@
   .categories-item-tablet-other:first-child {
     margin-top: 24px;
   }
-  .categories-item-tablet:nth-child(3) {
+  .categories-activ {
     background-color: #4440f7;
     color: #f4f4f4;
   }
@@ -165,6 +172,10 @@
   }
 }
 @media screen and (min-width: 1280px) {
+.section {
+  padding-bottom: 60px;
+}
+
   .categories-list.is-desktop {
     display: flex;
     flex-direction: row;
@@ -180,18 +191,34 @@
     position: absolute;
     top: 38px;
     left: 600px;
+    z-index: 200;
     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1);
     color: #4b48db;
     border-radius: 20px;
     padding: 0px 24px;
     background-color: #f4f4f4;
   }
-  .categories-item-tablet:nth-child(3) {
-    background-color: #f4f4f4;
-    color: #4440f7;
-  }
-  .categories-item-tablet:nth-child(4) {
-    background-color: #4440f7;
-    color: #f4f4f4;
-  }
 }
+/* Дяденко вніс зміни */
+.categories-menu.js-open{
+  background: var(--accent-color);
+  color: var(--third-color);
+}
+.categories-button--icon {
+  fill: var(--theme-color);
+}
+.button-categories.is-open .categories-button--icon{
+  
+  fill: var(--third-color);
+}
+
+.categories-others-menu{
+  background: var(--third-color);
+  color: var(--accent-color);
+}
+.categories-others-menu.js-others-open {
+  background: var(--accent-color);
+  color: var(--third-color);
+}
+
+/*  */
